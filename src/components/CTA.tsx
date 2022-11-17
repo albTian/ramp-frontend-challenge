@@ -22,7 +22,7 @@ export const CTA = () => (
       mx={2}
       width="full"
     >
-      chakra-ui
+      personal site
     </Button>
     <Button
       as={ChakraLink}
@@ -35,7 +35,7 @@ export const CTA = () => (
       mx={2}
       width="full"
     >
-      View Repo
+      template repo
     </Button>
   </Container>
 )

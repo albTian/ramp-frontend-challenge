@@ -1,5 +1,5 @@
 import { LinkIcon } from "@chakra-ui/icons";
-import { Text, Button } from "@chakra-ui/react";
+import { Text, Button, Box, VStack, Code } from "@chakra-ui/react";
 import Link from "next/link";
 
 import { Container } from "../components/Container";
@@ -8,26 +8,22 @@ import { DarkModeSwitch } from "../components/DarkModeSwitch";
 import { Hero } from "../components/Hero";
 import RampInput from "../components/RampInput";
 
-const Index = () => (
-  <Container height="100vh">
-    <Hero />
-    <Text color="text">
-      Here's the input prop you asked for :) To input an array, simply separate
-      statements with commas.
-    </Text>
-    <Text color="text">
-      Big thanks to Next.js and ChakraUI, this repo is base off the public
-      template
-    </Text>
-    <Button color="text">
-      <Link href="https://github.com/vercel/next.js/tree/canary/examples/with-chakra-ui" target={"_blank"}>
-        Template here
-      </Link>
-    </Button>
-    <RampInput />
+const rampPrompt =
+  'Create a React component that accepts an "input" prop. If the "input" prop is falsy, render a live-updating date and time that updates every second. If the "input" prop is an array, render the array\'s elements in a list. If the "input" prop is anything else, render the value in a \<div\>.';
 
-    <DarkModeSwitch />
-    <CTA />
+const Index = () => (
+  <Container>
+    <VStack w={"50%"} spacing={"20px"}>
+      <Hero />
+      <Text color="text">
+        Here's the input prop you asked for :) In response to the prompt:
+        <Code>{rampPrompt}</Code>
+      </Text>
+      <RampInput />
+
+      <DarkModeSwitch />
+      <CTA />
+    </VStack>
   </Container>
 );
 

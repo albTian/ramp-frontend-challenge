@@ -7,7 +7,7 @@ interface ArrayComponentProps {
 const ArrayComponent = (p: ArrayComponentProps) => {
   return (
     <Box>
-      <Text>{p.text}</Text>
+      <Text color="text">{p.text}</Text>
     </Box>
   );
 };
@@ -24,7 +24,7 @@ const DateTimeDisplay = () => {
   });
   return (
     <Box>
-      <Box>{date.toTimeString()}</Box>
+      <Text color="text">Today is {date.toLocaleString()}</Text>
     </Box>
   );
 };
@@ -41,18 +41,18 @@ const RampInput = () => {
     setArrayInput(input.split(","));
   }, [input]);
   return (
-    <VStack w="50%">
+    <VStack w="50%" spacing={"12px"}>
       <Input
-        placeholder="to type an array, simply separate statements with commas"
+        placeholder="try, some, commas!"
         value={input}
         onChange={handleInputChange}
       />
       {input ? (
-        <VStack>
+        <>
           {arrayInput.map((arrayElem) => (
             <ArrayComponent text={arrayElem} />
           ))}
-        </VStack>
+        </>
       ) : (
         <DateTimeDisplay />
       )}
