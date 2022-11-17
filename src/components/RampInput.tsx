@@ -1,7 +1,33 @@
-import { HStack, Input, Text, VStack } from "@chakra-ui/react";
+import { Box, HStack, Input, Text, VStack } from "@chakra-ui/react";
 import { ChangeEvent, useEffect, useState } from "react";
 
-// const ArrayComponent = (text: String) => <Text>{text}</Text>;
+interface ArrayComponentProps {
+  text: String;
+}
+const ArrayComponent = (p: ArrayComponentProps) => {
+  return (
+    <Box>
+      <Text>{p.text}</Text>
+    </Box>
+  );
+};
+
+// Separate component to confine the per-second re-renders to this component
+const DateTimeDisplay = () => {
+  var [date, setDate] = useState(new Date());
+
+  useEffect(() => {
+    var timer = setInterval(() => setDate(new Date()), 1000);
+    return function cleanup() {
+      clearInterval(timer);
+    };
+  });
+  return (
+    <Box>
+      <Box>{date.toTimeString()}</Box>
+    </Box>
+  );
+};
 
 const RampInput = () => {
   const [input, setInput] = useState("");
@@ -21,12 +47,14 @@ const RampInput = () => {
         value={input}
         onChange={handleInputChange}
       />
-      {arrayInput && (
+      {input ? (
         <VStack>
           {arrayInput.map((arrayElem) => (
-            <Text>{arrayElem}</Text>
+            <ArrayComponent text={arrayElem} />
           ))}
         </VStack>
+      ) : (
+        <DateTimeDisplay />
       )}
     </VStack>
   );
