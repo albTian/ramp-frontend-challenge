@@ -18,7 +18,7 @@ const Index = () => (
       <Text color="text">
         Here's the input prop you asked for :) In response to the prompt:
       </Text>
-      <Code>{rampPrompt}</Code>
+      <Code >{rampPrompt}</Code>
       <Text color="text">
         As an easter egg to the backend challenge, try pasting a base64 encoded string ;)
       </Text>
