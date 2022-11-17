@@ -2,16 +2,15 @@ import {
   Box,
   Button,
   Code,
-  HStack,
+  Divider,
   Input,
   Text,
-  Toast,
   useToast,
   VStack,
-  Divider,
 } from "@chakra-ui/react";
 import { ChangeEvent, useEffect, useState } from "react";
 
+// List component for the array display
 interface ArrayComponentProps {
   text: String;
 }
@@ -26,14 +25,13 @@ const ArrayComponent = (p: ArrayComponentProps) => {
 
 // Separate component to confine the per-second re-renders to this component
 const DateTimeDisplay = () => {
-  var [date, setDate] = useState(new Date());
+  const [date, setDate] = useState(new Date());
 
   useEffect(() => {
-    var timer = setInterval(() => setDate(new Date()), 1000);
-    return function cleanup() {
-      clearInterval(timer);
-    };
-  });
+    // Set a new Date every 1000 ms (1 second)
+    const timer = setInterval(() => setDate(new Date()), 1000);
+    return () => clearInterval(timer);
+  }, []);
   return (
     <Box>
       <Text color="text">Today is {date.toLocaleString()}</Text>
@@ -42,17 +40,20 @@ const DateTimeDisplay = () => {
 };
 
 const RampInput = () => {
+  // Frontend state
   const [input, setInput] = useState("");
   const [decodedInput, setDecodedInput] = useState("");
   const [arrayInput, setArrayInput] = useState<String[]>([]);
   const toast = useToast();
+
+  // Set state per keystroke
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
-    const newInput = e.target.value;
-    setInput(newInput);
+    setInput(e.target.value);
     setDecodedInput("");
   };
 
+  // Effect for input, will set ArrayInput
   useEffect(() => {
     setArrayInput(input.split(","));
   }, [input]);
@@ -61,9 +62,11 @@ const RampInput = () => {
     try {
       setDecodedInput(window.atob(text));
     } catch {
+      // Simple toast from ChakraUI
       toast({
         title: "Text not encoded in base 64",
-        description: "Check that your text is base 64 encoded. If the text has commas, remove them to decode",
+        description:
+          "Check that your text is base 64 encoded. If the text has commas, remove them to decode",
         status: "error",
         duration: 3000,
         isClosable: true,
@@ -80,6 +83,7 @@ const RampInput = () => {
       />
       <Button onClick={() => decodeInput(input)}>Decode a base64 input</Button>
       <Code display={"block"} whiteSpace={"pre"} children={decodedInput} />
+      {/* If input is falsy, display the DateTimeDisplay instead */}
       {input ? (
         <>
           {arrayInput.map((arrayElem) => (
