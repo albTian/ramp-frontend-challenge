@@ -14,7 +14,7 @@ export const CTA = () => (
     <Button
       as={ChakraLink}
       isExternal
-      href="https://chakra-ui.com"
+      href="https://atian.super.site/"
       variant="outline"
       colorScheme="green"
       rounded="button"

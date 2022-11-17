@@ -6,8 +6,9 @@ export const Hero = (props: FlexProps) => (
     alignItems="center"
     bgGradient="linear(to-l, heroGradientStart, heroGradientEnd)"
     bgClip="text"
+    textAlign={"center"}
     {...props}
   >
-    <Heading fontSize="6vw">Hey Ramp! I'm albert</Heading>
+    <Heading fontSize={["48px", "48px"]}>Hey Ramp! I'm albert</Heading>
   </Flex>
 )

@@ -1,4 +1,12 @@
-import { Box, HStack, Input, Text, VStack } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Code,
+  HStack,
+  Input,
+  Text,
+  VStack,
+} from "@chakra-ui/react";
 import { ChangeEvent, useEffect, useState } from "react";
 
 interface ArrayComponentProps {
@@ -6,7 +14,7 @@ interface ArrayComponentProps {
 }
 const ArrayComponent = (p: ArrayComponentProps) => {
   return (
-    <Box>
+    <Box maxW={"100%"}>
       <Text color="text">{p.text}</Text>
     </Box>
   );
@@ -31,22 +39,34 @@ const DateTimeDisplay = () => {
 
 const RampInput = () => {
   const [input, setInput] = useState("");
+  const [decodedInput, setDecodedInput] = useState("");
   const [arrayInput, setArrayInput] = useState<String[]>([]);
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
-    setInput(e.target.value);
+    const newInput = e.target.value;
+    setInput(newInput);
+    setDecodedInput("");
   };
 
   useEffect(() => {
     setArrayInput(input.split(","));
   }, [input]);
+
+  const decodeInput = (text: string) => {
+    try {
+      setDecodedInput(window.atob(text));
+    } catch {}
+  };
+
   return (
-    <VStack w="50%" spacing={"12px"}>
+    <VStack w="100%" spacing={"12px"}>
       <Input
         placeholder="try, some, commas!"
         value={input}
         onChange={handleInputChange}
       />
+      <Button onClick={() => decodeInput(input)}>Decode a base64 input</Button>
+      <Code display={"block"} whiteSpace={"pre"} children={decodedInput} />
       {input ? (
         <>
           {arrayInput.map((arrayElem) => (
